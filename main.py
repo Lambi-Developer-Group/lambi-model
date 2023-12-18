@@ -27,9 +27,13 @@ def delete_download_folder(folder_path):
     except Exception as e:
         print(f"Error deleting folder: {str(e)}")
 
-@app.route('/api')
+@app.route('/')
 def hello_world():
-    return 'hai'
+    return 'hello world'
+
+@app.route('/api')
+def hello_api():
+    return 'hello api'
 
 @app.route('/api/recommendation', methods=["POST"])
 def recommend():
