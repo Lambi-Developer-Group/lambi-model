@@ -4,6 +4,8 @@ from reccommender.utils.recommendation_library import get_combinations
 import json
 from google.cloud import firestore
 from dotenv import dotenv_values
+import os
+import shutil
 
 
 app = Flask(__name__)
