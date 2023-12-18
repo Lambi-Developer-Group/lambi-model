@@ -1,2 +1,6 @@
 .env
 .venv
+env
+.dockerignore
+Dockerfile
+app.yaml

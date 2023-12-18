@@ -3,19 +3,19 @@ from reccommender.utils.get_raw_img import process_and_return_json_data
 from reccommender.utils.recommendation_library import get_combinations
 import json
 from google.cloud import firestore
-from dotenv import dotenv_values
+from dotenv import dotenv_values, load_dotenv
 import os
 import shutil
 
+load_dotenv()
 
 app = Flask(__name__)
 
 app.config['ENV'] = 'development'
-app.config['DEBUG'] = True
+app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 
 FOLDER_DOWNLOAD_IMG = './download/'
 config = dotenv_values(".env")
-DOC_ID = config['DOC_ID']
 DOC_ID2 = ''
 
 def delete_download_folder(folder_path):
@@ -66,5 +66,5 @@ def recommend():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='3000', debug=True)
+    app.run()
 
