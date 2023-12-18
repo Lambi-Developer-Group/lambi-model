@@ -217,12 +217,15 @@ def recommend_outfit(top, bottom):
 def get_combinations(data):
     tops = []
     bottoms = []
+    dresses= []
     all_combinations = []
     recommendations = []
 
     for item_key, item_value in data.items():
-        if item_value["type"] in ["Tshirts", "Shirts", "Jackets", "Dresses", "Longsleeve", "Hoodie", "Tops"]:
+        if item_value["type"] in ["Tshirts", "Shirts", "Jackets", "Longsleeve", "Hoodie", "Tops"]:
             tops.append(item_value)
+        elif item_value["type"] == "Dresses":
+            dresses.append(item_value)
         else:
             bottoms.append(item_value)
 
@@ -230,21 +233,34 @@ def get_combinations(data):
         for bottom in bottoms:
             all_combinations.append({"top": top, "bottom": bottom})
 
-    for combination in all_combinations:
-        top_id = combination["top"]["image_path"].split("/")[-1]
-        bottom_id = combination["bottom"]["image_path"].split("/")[-1]
-        top_type = combination["top"]["type"]
-        bottom_type = combination["bottom"]["type"]
+    for dress in dresses:
+        all_combinations.append({"dress": dress})
 
-        if top_type != "Dresses":
+    for combination in all_combinations:
+        if "top" in combination and "bottom" in combination:
+            top_id = combination["top"]["image_path"].split("/")[-1]
+            bottom_id = combination["bottom"]["image_path"].split("/")[-1]
+            top_type = combination["top"]["type"]
+            bottom_type = combination["bottom"]["type"]
             result_outfit_type = recommend_outfit(top_type, bottom_type)
-        result_color_combination = is_good_combination(combination["top"]["color"],
-                                                       combination["bottom"]["color"])
+            result_color_combination = is_good_combination(combination["top"]["color"],
+                                                           combination["bottom"]["color"])
+        elif "dress" in combination:
+            dress_id = combination["dress"]["image_path"].split("/")[-1]
+            dress_type = combination["dress"]["type"]
+            result_outfit_type = recommend_outfit(dress_type, dress_type)
+            result_color_combination = is_good_combination(combination["dress"]["color"],
+                                                           combination["dress"]["color"])
+
+
+
+
 
         if result_color_combination:
-            message = f"Kombinasi {top_type} dan {bottom_type} akan menampilkan look {result_outfit_type} dan {result_color_combination}"
             color_theory = result_color_combination[0]
-            if (result_outfit_type == "Formal" and (
+            if ("dress" in combination):
+                message="Dress sangat akan memberikan tampilan feminim dan elegan, sangat cocok untuk acara formal."
+            elif (result_outfit_type == "Formal" and (
                     color_theory == 'triadic' or color_theory == 'tetradic' or color_theory == 'complementary')):
                 message = f"Kombinasi {top_type} dan {bottom_type} akan menghasilkan look Formal, namun pemilihan warna perlu dipertimbangkan karena kombinasi warna anda yang termasuk dalam teori warna {color_theory} yang mengurangi kesan formal pada tampilan Anda. Lebih cocok digunakan untuk acara semi-formal."
             elif (result_outfit_type == "Smart Casual" and (
@@ -284,22 +300,34 @@ def get_combinations(data):
             elif (result_outfit_type == "Casual" and (color_theory == 'analogous')):
                 message = f"Kombinasi {top_type} dan {bottom_type} akan menciptakan tampilan Casual yang menarik dengan pilihan warna-warna yang berdekatan satu sama lain di roda warna untuk menciptakan penampilan yang menyatu dan penuh keceriaan. Cocok untuk acara santai atau kegiatan sehari-hari yang ingin tetap tampil stylish."
 
-            recommendation = {
-                "recommendation_id": len(recommendations) + 1,
-                "top": {
-                    "id": top_id,
-                    "type": top_type,
-                    "color_hex": combination["top"]["color"],
-                    "image": combination["top"]["image_path"]
-                },
-                "bottom": {
-                    "id": bottom_id,
-                    "type": bottom_type,
-                    "color_hex": combination["bottom"]["color"],
-                    "image": combination["bottom"]["image_path"]
-                },
-                "message": message
-            }
+            if "top" in combination and "bottom" in combination:
+                recommendation = {
+                    "recommendation_id": len(recommendations) - 1 + 1,
+                    "top": {
+                        "id": top_id,
+                        "type": top_type,
+                        "color_hex": combination["top"]["color"],
+                        "image": combination["top"]["image_path"]
+                    },
+                    "bottom": {
+                        "id": bottom_id,
+                        "type": bottom_type,
+                        "color_hex": combination["bottom"]["color"],
+                        "image": combination["bottom"]["image_path"]
+                    },
+                    "message": message
+                }
+            elif "dress" in combination:
+                recommendation = {
+                    "recommendation_id": len(recommendations) - 1 + 1,
+                    "dress": {
+                        "id": dress_id,
+                        "type": dress_type,
+                        "color_hex": combination["dress"]["color"],
+                        "image": combination["dress"]["image_path"]
+                    },
+                    "message": message
+                }
             recommendations.append(recommendation)
 
     return recommendations

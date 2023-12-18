@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from reccommender.utils.get_raw_img import process_and_return_json_data
 from reccommender.utils.recommendation_library import get_combinations
 import json
@@ -14,33 +14,40 @@ app.config['DEBUG'] = True
 FOLDER_DOWNLOAD_IMG = './download/'
 config = dotenv_values(".env")
 DOC_ID = config['DOC_ID']
+DOC_ID2 = ''
 
 
-@app.route('/')
+@app.route('/api')
 def hello_world():
-    return render_template('index.html')
+    return 'hai'
 
-@app.route('/recommend', methods=["POST"])
+@app.route('/api/recommendation', methods=["POST"])
 def recommend():
-    # sessionID = ''
-    # docRef = firestore.collection('session').doc(sessionID)
+    try:
+        # Get the JSON data from the request body
+        request_data = request.json
 
-    json_data = process_and_return_json_data(folder_path=FOLDER_DOWNLOAD_IMG,
-                                            doc_id=DOC_ID)
-    
-    with open(json_data) as f:
-        outfit_data = json.load(f)
+        doc_id = request_data.get('imageID', DOC_ID2)
 
-    rec = get_combinations(outfit_data)
+        json_data = process_and_return_json_data(folder_path=FOLDER_DOWNLOAD_IMG,
+                                                doc_id=doc_id)
+        
+        with open(json_data) as f:
+            outfit_data = json.load(f)
 
-    # Return a response, for example, a JSON response
-    return jsonify(
-        {
-            "data": rec
-        }
-    )
+        rec = get_combinations(outfit_data)
+
+        # Return a response, for example, a JSON response
+        return jsonify(
+            {
+                "data": rec
+            }
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='8080', debug=True)
+    app.run(host='0.0.0.0', port='3000', debug=True)
 
