@@ -1,0 +1,38 @@
+{
+  "34034caf.JPG": {
+    "image_path": "./download/34034caf.JPG",
+    "type": "Hoodie",
+    "color": "FF0000",
+    "img_link": "https://storage.googleapis.com/cc-lambi-public/34034caf.JPG"
+  },
+  "56c8f4eb.JPG": {
+    "image_path": "./download/56c8f4eb.JPG",
+    "type": "Jeans",
+    "color": "FF0000",
+    "img_link": "https://storage.googleapis.com/cc-lambi-public/56c8f4eb.JPG"
+  },
+  "642f8ba6.JPG": {
+    "image_path": "./download/642f8ba6.JPG",
+    "type": "Tshirts",
+    "color": "FF0000",
+    "img_link": "https://storage.googleapis.com/cc-lambi-public/642f8ba6.JPG"
+  },
+  "8159146d.JPG": {
+    "image_path": "./download/8159146d.JPG",
+    "type": "Hoodie",
+    "color": "FF0000",
+    "img_link": "https://storage.googleapis.com/cc-lambi-public/8159146d.JPG"
+  },
+  "dc98fe29.JPG": {
+    "image_path": "./download/dc98fe29.JPG",
+    "type": "Pants",
+    "color": "FF0000",
+    "img_link": "https://storage.googleapis.com/cc-lambi-public/dc98fe29.JPG"
+  },
+  "dfc89efe.JPG": {
+    "image_path": "./download/dfc89efe.JPG",
+    "type": "Shorts",
+    "color": "FF0000",
+    "img_link": "https://storage.googleapis.com/cc-lambi-public/dfc89efe.JPG"
+  }
+}
