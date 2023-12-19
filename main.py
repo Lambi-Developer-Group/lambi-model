@@ -1,21 +1,22 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, request
 from reccommender.utils.get_raw_img import process_and_return_json_data
 from reccommender.utils.recommendation_library import get_combinations
 import json
-from google.cloud import firestore
-from dotenv import dotenv_values
+from dotenv import dotenv_values, load_dotenv
 import os
 import shutil
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1' 
+
+load_dotenv()
 
 app = Flask(__name__)
 
 app.config['ENV'] = 'development'
-app.config['DEBUG'] = True
+app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 
 FOLDER_DOWNLOAD_IMG = './download/'
 config = dotenv_values(".env")
-DOC_ID = config['DOC_ID']
 DOC_ID2 = ''
 
 def delete_download_folder(folder_path):
@@ -26,10 +27,6 @@ def delete_download_folder(folder_path):
             shutil.rmtree(folder_path)
     except Exception as e:
         print(f"Error deleting folder: {str(e)}")
-
-@app.route('/')
-def hello_world():
-    return 'hello world'
 
 @app.route('/api')
 def hello_api():
@@ -66,5 +63,5 @@ def recommend():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='3000', debug=True)
+    app.run()
 

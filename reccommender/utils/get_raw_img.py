@@ -7,6 +7,8 @@ import os
 import requests
 import json
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1' 
+
 # FOLDER_DOWNLOAD_IMG = './download/'
 # DOC_ID = 'ErpdNb64hA7S0UgX1kYi'
 

@@ -307,13 +307,13 @@ def get_combinations(data):
                         "id": top_id,
                         "type": top_type,
                         "color_hex": combination["top"]["color"],
-                        "image": combination["top"]["image_path"]
+                        "image": combination["top"]["img_link"]
                     },
                     "bottom": {
                         "id": bottom_id,
                         "type": bottom_type,
                         "color_hex": combination["bottom"]["color"],
-                        "image": combination["bottom"]["image_path"]
+                        "image": combination["bottom"]["img_link"]
                     },
                     "message": message
                 }
@@ -324,7 +324,7 @@ def get_combinations(data):
                         "id": dress_id,
                         "type": dress_type,
                         "color_hex": combination["dress"]["color"],
-                        "image": combination["dress"]["image_path"]
+                        "image": combination["dress"]["img_link"]
                     },
                     "message": message
                 }
