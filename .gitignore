@@ -2,6 +2,5 @@
 .venv
 env
 .dockerignore
-Dockerfile
 app.yaml
 raw_image.json
