@@ -1,11 +1,12 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, request
 from reccommender.utils.get_raw_img import process_and_return_json_data
 from reccommender.utils.recommendation_library import get_combinations
 import json
-from google.cloud import firestore
 from dotenv import dotenv_values, load_dotenv
 import os
 import shutil
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1' 
 
 load_dotenv()
 
